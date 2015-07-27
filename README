@@ -1,0 +1,12 @@
+A simple example of LSB(Least Significant Bit) Radix sort in go.
+
+Interestingly, we are within 75% of the std sort for massive slices but fall to 50% as fast for smaller slices.
+
+Possible extensions could be adding SIMD via go's support for asm or switching to MSB sort and dividing work among available cpus.
+
+This naive implementation benches as follows on a i5-2500k at stock clock, the standard 'sort' package is provided for comparison.
+
+BenchmarkIntsBig               3         454724400 ns/op
+BenchmarkStdBig                5         313639820 ns/op
+BenchmarkIntsSmall          5000            371447 ns/op
+BenchmarkStdSmall          10000            153469 ns/op

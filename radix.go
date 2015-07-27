@@ -8,25 +8,23 @@ func Ints(a []int) {
 	// Bucket on 0 or 1
 	bucketLen:= 2
 	buckets:= make([]int, bucketLen)
-	positions:= make([]int, len(a))
 
 	// Assume 64 bit integers. Can do early exit later.
+	var pos int = 0
 	var i uint = 0
 	var n int
-	var pos int = 0
 	var pow2 int
 	for ; i < 64; i++ {
 	
 		pow2 = 1 << i
 
 		// Populate buckets
-		for p, n:= range a{
+		for _, n:= range a{
 
 			// Find if the bit is set then shift
 			// right to avoid a conditional
 			pos = (n & pow2) >> i
-			positions[p] = pos
-			buckets[positions[p] ]+= 1
+			buckets[pos]+= 1
 
 		}
 
@@ -37,7 +35,7 @@ func Ints(a []int) {
 		for p:= (len(a) - 1); p >= 0; p-- {
 			
 			n = a[p]
-			pos = positions[p]
+			pos = (n & pow2) >> i
 			buckets[pos]--
 			scratch[buckets[pos]] = n
 

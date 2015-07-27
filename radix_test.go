@@ -11,6 +11,10 @@ import (
 var seed int = 99
 var random []int = nRands(1000000, seed)
 
+var big []int = nRands(1000000, seed)
+var small []int = nRands(1000, seed)
+
+
 func TestSort(t *testing.T) {
 
 	// Stdlib
@@ -32,20 +36,38 @@ func TestSort(t *testing.T) {
 
 }
 
-func BenchmarkInts(b *testing.B) {
-	radix:= make([]int, len(random))
+func BenchmarkIntsBig(b *testing.B) {
+	radix:= make([]int, len(big))
 
 	for n := 0; n < b.N; n++ {
-		copy(radix, random)
+		copy(radix, big)
 		Ints(radix)
 	}
 }
 
-func BenchmarkStd(b *testing.B) {
-	std:= make([]int, len(random))
+func BenchmarkStdBig(b *testing.B) {
+	std:= make([]int, len(big))
 
 	for n := 0; n < b.N; n++ {
-		copy(std, random)
+		copy(std, big)
+		sort.Ints(std)
+	}
+}
+
+func BenchmarkIntsSmall(b *testing.B) {
+	radix:= make([]int, len(small))
+
+	for n := 0; n < b.N; n++ {
+		copy(radix, small)
+		Ints(radix)
+	}
+}
+
+func BenchmarkStdSmall(b *testing.B) {
+	std:= make([]int, len(small))
+
+	for n := 0; n < b.N; n++ {
+		copy(std, small)
 		sort.Ints(std)
 	}
 }
